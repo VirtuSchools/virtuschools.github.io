@@ -12,7 +12,7 @@
 		<meta name="viewport" content="width=device-width, initial-scale=1" />
 		<!--[if lte IE 8]><script src="assets/js/ie/html5shiv.js"></script><![endif]-->
 		<link rel="stylesheet" href="assets/css/main.css" />
-		<script src="https://cdn.firebase.com/js/client/2.4.0/firebase.js"></script>
+		<script src="https://www.gstatic.com/firebasejs/live/3.0/firebase.js"></script>
 		<!--[if lte IE 9]><link rel="stylesheet" href="assets/css/ie9.css" /><![endif]-->
 		<!--[if lte IE 8]><link rel="stylesheet" href="assets/css/ie8.css" /><![endif]-->
 	</head>
@@ -125,29 +125,44 @@
 			<!--[if lte IE 8]><script src="assets/js/ie/respond.min.js"></script><![endif]-->
 			<script src="assets/js/main.js"></script>
      		<script>
-				var ref = new Firebase("https://flickering-fire-5865.firebaseio.com/");
-				// Create a callback which logs the current auth state
-				function authDataCallback(authData) {
-					if (authData) {
-						document.getElementById("signupProfileBtn").href="UpdateProfile.html";
-						document.getElementById("signupProfileBtn").innerHTML="My Profile";
-						document.getElementById("loginLogoutBtn").href="#";
-						document.getElementById("loginLogoutBtn").onclick=function() { ref.unauth(); window.location.replace("Login.html"); };
-						document.getElementById("loginLogoutBtn").innerHTML="Log Out";
-					    console.log("User " + authData.uid + " is logged in with " + authData.provider);
-					} else {
-						document.getElementById("signupProfileBtn").href="Register.html";
+				// Initialize Firebase
+				var config = {
+				  apiKey: "AIzaSyBAMYXNQs9DHykysnHyNgh4Fw8WzgOppNw",
+				  authDomain: "flickering-fire-5865.firebaseapp.com",
+				  databaseURL: "https://flickering-fire-5865.firebaseio.com",
+				  storageBucket: "flickering-fire-5865.appspot.com",
+				};
+				var app = firebase.initializeApp(config);
+				var auth = app.auth();
+
+      			initApp = function() {
+        			auth.onAuthStateChanged(function(user) {
+			          if (user) {
+			            // User is signed in.
+			            var displayName = user.displayName;
+			            var email = user.email;
+			            var emailVerified = user.emailVerified;
+			            var photoURL = user.photoURL;
+			            var uid = user.uid;
+			            var providerData = user.providerData;
+			            user.getToken().then(function(accessToken) {
+			              	document.getElementById("signupProfileBtn").href="UpdateProfile.html";
+							document.getElementById("signupProfileBtn").innerHTML="My Profile";
+							document.getElementById("loginLogoutBtn").href="#";
+							document.getElementById("loginLogoutBtn").onclick=function() { firebase.auth().signOut(); window.location.replace("Login.html"); };
+							document.getElementById("loginLogoutBtn").innerHTML="Log Out";
+					    	console.log("User " + displayName + " is logged in with " + providerData);
+			            });
+			          } else {
+			            document.getElementById("signupProfileBtn").href="Login.html";
 						document.getElementById("signupProfileBtn").innerHTML="Sign Up";
 						document.getElementById("loginLogoutBtn").href="Login.html";
 						document.getElementById("loginLogoutBtn").onclick=function(){ window.location="Login.html"};
 						document.getElementById("loginLogoutBtn").innerHTML="Login";
 					    console.log("User is logged out");
-				    }
+					  }
+					});
 				}
-
-				// Register the callback to be fired every time auth state changes
-				ref.onAuth(authDataCallback)
-				ref.on('child_added', ref.getAuth());
 		   </script>
 	</body>
 </html>
