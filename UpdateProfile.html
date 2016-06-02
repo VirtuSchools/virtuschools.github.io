@@ -118,7 +118,7 @@
 														try
 														{
 															firebase.database().ref('/users/' + uid).once('value').then(function(snapshot) {
-															  if(snapshot.val().email=="")
+															  if(snapshot.val()==null || snapshot.val().email=="")
 															  {
 																  firebase.database().ref('users/' + uid).set({
 																    email: email
@@ -178,11 +178,22 @@
 											 		var currentAvatar=null;
 											 		var currentEmail=null;
 											 		firebase.database().ref('/users/' + uid).once('value').then(function(snapshot) {
-														currentUserType=snapshot.val().userType;
-														currentCourse=snapshot.val().course;
-														currentCourseId=snapshot.val().courseId;
-														currentAvatar=snapshot.val().gender;
-														currentEmail=snapshot.val().email;
+											 			if(snapshot.val()!=null)
+											 			{
+															currentUserType=snapshot.val().userType;
+															currentCourse=snapshot.val().course;
+															currentCourseId=snapshot.val().courseId;
+															currentAvatar=snapshot.val().gender;
+															currentEmail=snapshot.val().email;
+														}
+														else
+														{
+															currentUserType="";
+															currentCourse="";
+															currentCourseId="";
+															currentAvatar="";
+															currentEmail="";
+														}
 													});
 													if(userType!=currentUserType)
 													{
