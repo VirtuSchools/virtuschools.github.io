@@ -250,9 +250,9 @@
 														}
 														if(courseId!="")
 														{
-															firebase.database().ref('users/' + uid+'/courses').update({
-															    document.getElementById("course").value : courseId
-															});
+															var json = { };
+															json[course] = courseId;
+															firebase.database().ref('users/' + uid+'/courses').update(json);
 														}
 														else if(currentCourses==null || (currentCourses.indexOf(course) < 0 && courseId==""))
 														{
