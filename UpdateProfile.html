@@ -251,7 +251,7 @@
 														if(courseId!="")
 														{
 															firebase.database().ref('users/' + uid+'/courses').update({
-															    courseId: courseId
+															    course: courseId
 															});
 														}
 														else if(currentCourses==null || (currentCourses.indexOf(course) < 0 && courseId==""))
