@@ -240,9 +240,7 @@
 															  // An error happened.
 															  console.log(error);
 															});
-															firebase.database().ref('users/' + uid+'/courses').set({
-															    null
-															}).then(function() {
+															firebase.database().ref('users/' + uid+'/courses').set(null).then(function() {
 															  // Update successful.
 															  console.log("successful"); 
 															}, function(error) {
