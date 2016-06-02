@@ -152,8 +152,10 @@
 													  		photoURL: enteredPhoto
 														}).then(function() {
 														  // Update successful.
+														  location.reload(); 
 														}, function(error) {
 														  // An error happened.
+														  console.log(error);
 														});
 											 		}
 											 		var enteredfname=document.getElementById("fname").value;
@@ -165,8 +167,10 @@
 													  		displayName: combinedName
 														}).then(function() {
 														  // Update successful.
+														  location.reload(); 
 														}, function(error) {
 														  // An error happened.
+														  console.log(error);
 														});
 											 		}
 											 		else if(enteredfname!="" && enteredlname!="")
@@ -176,8 +180,10 @@
 													  		displayName: combinedName
 														}).then(function() {
 														  // Update successful.
+														  location.reload(); 
 														}, function(error) {
 														  // An error happened.
+														  console.log(error);
 														});
 											 		}
 											 		else if(enteredfname=="" && enteredlname!="")
@@ -187,8 +193,10 @@
 													  		displayName: combinedName
 														}).then(function() {
 														  // Update successful.
+														  location.reload(); 
 														}, function(error) {
 														  // An error happened.
+														  console.log(error);
 														});
 											 		}
 											 		var enteredEmail=document.getElementById("email").value;
@@ -198,10 +206,13 @@
 													  		email : enteredEmail
 														}).then(function() {
 														  // Update successful.
+														  location.reload(); 
 														}, function(error) {
 														  // An error happened.
+														  console.log(error);
 														});
 											 		}
+
 											 	}
 										    </script>
 										    
