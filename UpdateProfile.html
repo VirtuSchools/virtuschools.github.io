@@ -117,7 +117,7 @@
 														var lastname=names[1];
 														try
 														{
-															firebase.database().ref('/users/' + uid).once('value').then(function(snapshot) {
+															firebase.database().ref('/users/' + uid+'/profile').once('value').then(function(snapshot) {
 															  if(snapshot.val()==null || snapshot.val().email=="")
 															  {
 																  firebase.database().ref('users/' + uid).update({
@@ -133,12 +133,29 @@
 															  if(snapshot.val()!=null)
 															  {
 																  document.getElementById("currenttype").innerHTML=snapshot.val().userType;
-																  document.getElementById("currentcourse").innerHTML=snapshot.val().course;
-																  document.getElementById("currentcourseid").innerHTML=snapshot.val().courseId;
 																  document.getElementById("currentgender").innerHTML=snapshot.val().gender;
 																  document.getElementById("currentemail").innerHTML=snapshot.val().email;
 															  }
 															});
+															var currentCourses=null;
+															var currentCourseIds=null;
+															firebase.database().ref('/users/' + uid+'/courses').once('value').then(function(snapshot) {
+												 			if(snapshot.val()!=null)
+												 			{
+																if(snapshot.val().Algebra!=null)
+																{
+																	currentCourses+="Algebra ";
+																	currentCourseIds+=snapshot.val().Algebra+" ";
+																}
+															}
+															else
+															{
+																currentCourses="";
+																currentCourseIds="";
+															}
+															document.getElementById("currentcourses").innerHTML=currentCourses;
+															document.getElementById("currentcourseids").innerHTML=currentCourseIds;
+														});
 														}
 														catch(ex)
 														{
@@ -177,33 +194,44 @@
 												 		var courseId=document.getElementById("courseId").value;
 												 		var avatar=document.getElementById("gender").value;
 												 		var currentUserType=null;
-												 		var currentCourse=null;
-												 		var currentCourseId=null;
+												 		var currentCourses=null;
+												 		var currentCourseIds=null;
 												 		var currentAvatar=null;
 												 		var currentEmail=null;
 												 		firebase.database().ref('/users/' + uid+'/profile').once('value').then(function(snapshot) {
 												 			if(snapshot.val()!=null)
 												 			{
 																currentUserType=snapshot.val().userType;
-																currentCourse=snapshot.val().course;
-																currentCourseId=snapshot.val().courseId;
 																currentAvatar=snapshot.val().gender;
 																currentEmail=snapshot.val().email;
 															}
 															else
 															{
 																currentUserType="";
-																currentCourse="";
-																currentCourseId="";
 																currentAvatar="";
 																currentEmail="";
 															}
 														});
-														console.log("userType="+userType+" currentUserType="+currentUserType);
+														firebase.database().ref('/users/' + uid+'/courses').once('value').then(function(snapshot) {
+												 			if(snapshot.val()!=null)
+												 			{
+																if(snapshot.val().Algebra!=null)
+																{
+																	currentCourses+="Algebra ";
+																	currentCourseIds+=snapshot.val().Algebra+" ";
+																}
+															}
+															else
+															{
+																currentCourses="";
+																currentCourseIds="";
+															}
+														});
+														//console.log("userType="+userType+" currentUserType="+currentUserType);
 														if(userType!=currentUserType)
 														{
-															console.log("setting userType")
-															firebase.database().ref('users/' + uid+'/profile').update({
+														//	console.log("setting userType")
+															firebase.database().ref('users/' + uid+'/profile').set({
 															    userType: userType
 															}).then(function() {
 															  // Update successful.
@@ -211,17 +239,26 @@
 															}, function(error) {
 															  // An error happened.
 															  console.log(error);
-															});;
-														}
-														if(course!=currentCourse)
-														{
-															firebase.database().ref('users/' + uid+'/profile').update({
-															    course: course
+															});
+															firebase.database().ref('users/' + uid+'/courses').set({
+															    null
+															}).then(function() {
+															  // Update successful.
+															  console.log("successful"); 
+															}, function(error) {
+															  // An error happened.
+															  console.log(error);
 															});
 														}
-														if(courseId!=currentCourseId)
+														if(currentCourses.indexOf(course) < 0 && courseId=="")
 														{
-															firebase.database().ref('users/' + uid+'/profile').update({
+															firebase.database().ref('users/' + uid+'/courses').update({
+															    course: ""
+															});
+														}
+														if(courseId!="")
+														{
+															firebase.database().ref('users/' + uid+'/courses').update({
 															    courseId: courseId
 															});
 														}
@@ -237,7 +274,7 @@
 														  		photoURL: enteredPhoto
 															}).then(function() {
 															  // Update successful.
-															  location.reload(); 
+															  
 															}, function(error) {
 															  // An error happened.
 															  console.log(error);
@@ -251,8 +288,7 @@
 												 			user.updateProfile({
 														  		displayName: combinedName
 															}).then(function() {
-															  // Update successful.
-															  location.reload(); 
+															  // Update successful. 
 															}, function(error) {
 															  // An error happened.
 															  console.log(error);
@@ -265,7 +301,6 @@
 														  		displayName: combinedName
 															}).then(function() {
 															  // Update successful.
-															  location.reload(); 
 															}, function(error) {
 															  // An error happened.
 															  console.log(error);
@@ -278,7 +313,6 @@
 														  		displayName: combinedName
 															}).then(function() {
 															  // Update successful.
-															  location.reload(); 
 															}, function(error) {
 															  // An error happened.
 															  console.log(error);
@@ -292,7 +326,6 @@
 														  		email : enteredEmail
 															}).then(function() {
 															  // Update successful.
-															  //location.reload(); 
 															}, function(error) {
 															  // An error happened.
 															  console.log(error);
@@ -302,6 +335,12 @@
 																email: enteredEmail
 															});
 												 		}
+												 		document.getElementById("fname").value="";
+												 		document.getElementById("lname").value="";
+												 		document.getElementById("purl").value="";
+												 		document.getElementById("email").value="";
+												 		document.getElementById("courseId").value="";
+												 		location.reload(); 
 											 		}
 											 		catch(ex)
 											 		{
@@ -316,8 +355,8 @@
 										    <strong>Last Name:</strong> <span id="currentlname"></span><br>
 										    <strong>Email:</strong> <span id="currentemail"></span><br>
 										    <strong>User Type:</strong> <span id="currenttype"></span><br>
-										    <strong>Course:</strong> <span id="currentcourse"> </span><br>
-										    <strong>Course Id:</strong> <span id="currentcourseid"></span><br>
+										    <strong>Courses:</strong> <span id="currentcourses"> </span><br>
+										    <strong>Course Ids:</strong> <span id="currentcourseids"></span><br>
 										    <strong>Avatar:</strong> <span id="currentgender"></span><br>
 
 										    <hr style="border: dashed 3px;" />
