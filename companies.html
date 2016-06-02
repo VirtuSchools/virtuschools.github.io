@@ -135,7 +135,7 @@
 				var app = firebase.initializeApp(config);
 				var auth = app.auth();
 
-      			initApp = function() {
+      			function initApp() {
       				console.log("in initApp");
         			auth.onAuthStateChanged(function(user) {
         			  console.log("in onAuthStateChanged");
@@ -167,6 +167,10 @@
 					    console.log("User is logged out");
 					  }
 					});
+					
+					window.onload = function() {
+      					initApp();
+    				};
 				}
 		   </script>
 	</body>
