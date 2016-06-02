@@ -251,7 +251,7 @@
 														if(courseId!="")
 														{
 															firebase.database().ref('users/' + uid+'/courses').update({
-															    course: courseId
+															    document.getElementById("course").value : courseId
 															});
 														}
 														else if(currentCourses==null || (currentCourses.indexOf(course) < 0 && courseId==""))
