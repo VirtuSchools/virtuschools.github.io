@@ -115,19 +115,26 @@
 														var uid = user.uid;
 														var firstname=names[0];
 														var lastname=names[1];
-														firebase.database().ref('/users/' + userId).once('value').then(function(snapshot) {
-														  if(snapshot.val().email=="")
-														  {
-															  firebase.database().ref('users/' + userId).set({
-															    email: email
-															  }).then(function(){
-														  		// Update successful.
-														  		console.log("Changed user email to"+email); 
-															  }, function(error) {
-														  		// An error happened.
-														  		console.log(error);
-															  });;
-														  }
+														try
+														{
+															firebase.database().ref('/users/' + userId).once('value').then(function(snapshot) {
+															  if(snapshot.val().email=="")
+															  {
+																  firebase.database().ref('users/' + userId).set({
+																    email: email
+																  }).then(function(){
+															  		// Update successful.
+															  		console.log("Changed user email to"+email); 
+																  }, function(error) {
+															  		// An error happened.
+															  		console.log(error);
+																  });;
+															  }
+														}
+														catch(ex)
+														{
+															console.log(ex);
+														}
 														  document.getElementById("currenttype").innerHTML=snapshot.val().userType;
 														  document.getElementById("currentcourse").innerHTML=snapshot.val().course;
 														  document.getElementById("currentcourseid").innerHTML=snapshot.val().courseId;
