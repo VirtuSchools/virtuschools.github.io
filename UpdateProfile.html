@@ -248,18 +248,19 @@
 															  console.log(error);
 															});
 														}
-														if(currentCourses.indexOf(course) < 0 && courseId=="")
-														{
-															firebase.database().ref('users/' + uid+'/courses').update({
-															    course: ""
-															});
-														}
 														if(courseId!="")
 														{
 															firebase.database().ref('users/' + uid+'/courses').update({
 															    courseId: courseId
 															});
 														}
+														else if(currentCourses==null || (currentCourses.indexOf(course) < 0 && courseId==""))
+														{
+															firebase.database().ref('users/' + uid+'/courses').update({
+															    course: ""
+															});
+														}
+														
 														if(avatar!=currentAvatar)
 														{
 															firebase.database().ref('users/' + uid+'/profile').update({
