@@ -136,7 +136,7 @@
 																  document.getElementById("currentcourse").innerHTML=snapshot.val().course;
 																  document.getElementById("currentcourseid").innerHTML=snapshot.val().courseId;
 																  document.getElementById("currentgender").innerHTML=snapshot.val().gender;
-																  document.getElementById("currentemail").innerHTML=email;
+																  document.getElementById("currentemail").innerHTML=snapshot.val().email;
 															  }
 															});
 														}
@@ -164,135 +164,141 @@
 												
 											 	function update()
 											 	{
-											 		var user = firebase.auth().currentUser;
-											 		var names = user.displayName.split(" ");
-													var uid = user.uid;
-													var firstname=names[0];
-													var lastname=names[1];
-											 		var enteredPhoto=document.getElementById("purl").value;
-											 		var userType=document.getElementById("type").value;
-											 		var course=document.getElementById("course").value;
-											 		var courseId=document.getElementById("courseId").value;
-											 		var avatar=document.getElementById("gender").value;
-											 		var currentUserType=null;
-											 		var currentCourse=null;
-											 		var currentCourseId=null;
-											 		var currentAvatar=null;
-											 		var currentEmail=null;
-											 		firebase.database().ref('/users/' + uid).once('value').then(function(snapshot) {
-											 			if(snapshot.val()!=null)
-											 			{
-															currentUserType=snapshot.val().userType;
-															currentCourse=snapshot.val().course;
-															currentCourseId=snapshot.val().courseId;
-															currentAvatar=snapshot.val().gender;
-															currentEmail=snapshot.val().email;
-														}
-														else
+											 		try
+											 		{
+												 		var user = firebase.auth().currentUser;
+												 		var names = user.displayName.split(" ");
+														var uid = user.uid;
+														var firstname=names[0];
+														var lastname=names[1];
+												 		var enteredPhoto=document.getElementById("purl").value;
+												 		var userType=document.getElementById("type").value;
+												 		var course=document.getElementById("course").value;
+												 		var courseId=document.getElementById("courseId").value;
+												 		var avatar=document.getElementById("gender").value;
+												 		var currentUserType=null;
+												 		var currentCourse=null;
+												 		var currentCourseId=null;
+												 		var currentAvatar=null;
+												 		var currentEmail=null;
+												 		firebase.database().ref('/users/' + uid).once('value').then(function(snapshot) {
+												 			if(snapshot.val()!=null)
+												 			{
+																currentUserType=snapshot.val().userType;
+																currentCourse=snapshot.val().course;
+																currentCourseId=snapshot.val().courseId;
+																currentAvatar=snapshot.val().gender;
+																currentEmail=snapshot.val().email;
+															}
+															else
+															{
+																currentUserType="";
+																currentCourse="";
+																currentCourseId="";
+																currentAvatar="";
+																currentEmail="";
+															}
+														});
+														if(userType!=currentUserType)
 														{
-															currentUserType="";
-															currentCourse="";
-															currentCourseId="";
-															currentAvatar="";
-															currentEmail="";
+															firebase.database().ref('users/' + uid).set({
+															    userType: userType
+															});
 														}
-													});
-													if(userType!=currentUserType)
-													{
-														firebase.database().ref('users/' + uid).set({
-														    userType: userType
-														});
-													}
-													if(course!=currentCourse)
-													{
-														firebase.database().ref('users/' + uid).set({
-														    course: course
-														});
-													}
-													if(courseId!=currentCourseId)
-													{
-														firebase.database().ref('users/' + uid).set({
-														    courseId: courseId
-														});
-													}
-													if(avatar!=currentAvatar)
-													{
-														firebase.database().ref('users/' + uid).set({
-														    gender: avatar
-														});
-													}
-											 		if(enteredPhoto!="")
-											 		{
-											 			user.updateProfile({
-													  		photoURL: enteredPhoto
-														}).then(function() {
-														  // Update successful.
-														  location.reload(); 
-														}, function(error) {
-														  // An error happened.
-														  console.log(error);
-														});
-											 		}
-											 		var enteredfname=document.getElementById("fname").value;
-											 		var enteredlname=document.getElementById("lname").value;
-											 		if(enteredfname!=""  && enteredlname=="")
-											 		{
-											 			var combinedName=enteredfname+" "+lastname;
-											 			user.updateProfile({
-													  		displayName: combinedName
-														}).then(function() {
-														  // Update successful.
-														  location.reload(); 
-														}, function(error) {
-														  // An error happened.
-														  console.log(error);
-														});
-											 		}
-											 		else if(enteredfname!="" && enteredlname!="")
-											 		{
-											 			var combinedName=enteredfname+" "+enteredlname;
-											 			user.updateProfile({
-													  		displayName: combinedName
-														}).then(function() {
-														  // Update successful.
-														  location.reload(); 
-														}, function(error) {
-														  // An error happened.
-														  console.log(error);
-														});
-											 		}
-											 		else if(enteredfname=="" && enteredlname!="")
-											 		{
-											 			var combinedName=firstname+" "+enteredlname;
-											 			user.updateProfile({
-													  		displayName: combinedName
-														}).then(function() {
-														  // Update successful.
-														  location.reload(); 
-														}, function(error) {
-														  // An error happened.
-														  console.log(error);
-														});
-											 		}
-											 		var enteredEmail=document.getElementById("email").value;
-											 		if(enteredEmail!="")
-											 		{
-											 			console.log("updating email to "+enteredEmail);
-											 			user.updateProfile({
-													  		email : enteredEmail
-														}).then(function() {
-														  // Update successful.
-														  //location.reload(); 
-														}, function(error) {
-														  // An error happened.
-														  console.log(error);
-														});
+														if(course!=currentCourse)
+														{
+															firebase.database().ref('users/' + uid).set({
+															    course: course
+															});
+														}
+														if(courseId!=currentCourseId)
+														{
+															firebase.database().ref('users/' + uid).set({
+															    courseId: courseId
+															});
+														}
+														if(avatar!=currentAvatar)
+														{
+															firebase.database().ref('users/' + uid).set({
+															    gender: avatar
+															});
+														}
+												 		if(enteredPhoto!="")
+												 		{
+												 			user.updateProfile({
+														  		photoURL: enteredPhoto
+															}).then(function() {
+															  // Update successful.
+															  location.reload(); 
+															}, function(error) {
+															  // An error happened.
+															  console.log(error);
+															});
+												 		}
+												 		var enteredfname=document.getElementById("fname").value;
+												 		var enteredlname=document.getElementById("lname").value;
+												 		if(enteredfname!=""  && enteredlname=="")
+												 		{
+												 			var combinedName=enteredfname+" "+lastname;
+												 			user.updateProfile({
+														  		displayName: combinedName
+															}).then(function() {
+															  // Update successful.
+															  location.reload(); 
+															}, function(error) {
+															  // An error happened.
+															  console.log(error);
+															});
+												 		}
+												 		else if(enteredfname!="" && enteredlname!="")
+												 		{
+												 			var combinedName=enteredfname+" "+enteredlname;
+												 			user.updateProfile({
+														  		displayName: combinedName
+															}).then(function() {
+															  // Update successful.
+															  location.reload(); 
+															}, function(error) {
+															  // An error happened.
+															  console.log(error);
+															});
+												 		}
+												 		else if(enteredfname=="" && enteredlname!="")
+												 		{
+												 			var combinedName=firstname+" "+enteredlname;
+												 			user.updateProfile({
+														  		displayName: combinedName
+															}).then(function() {
+															  // Update successful.
+															  location.reload(); 
+															}, function(error) {
+															  // An error happened.
+															  console.log(error);
+															});
+												 		}
+												 		var enteredEmail=document.getElementById("email").value;
+												 		if(enteredEmail!="")
+												 		{
+												 			console.log("updating email to "+enteredEmail);
+												 			user.updateProfile({
+														  		email : enteredEmail
+															}).then(function() {
+															  // Update successful.
+															  //location.reload(); 
+															}, function(error) {
+															  // An error happened.
+															  console.log(error);
+															});
 
-														firebase.database().ref('users/' + uid).set({
-															email: enteredEmail
-														});
+															firebase.database().ref('users/' + uid).set({
+																email: enteredEmail
+															});
+												 		}
 											 		}
-
+											 		catch(ex)
+											 		{
+											 			console.log(ex);
+											 		}
 											 	}
 										    </script>
 										    
