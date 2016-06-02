@@ -199,6 +199,7 @@
 																currentEmail="";
 															}
 														});
+														console.log("userType="+userType+" currentUserType="+currentUserType);
 														if(userType!=currentUserType)
 														{
 															firebase.database().ref('users/' + uid).set({
