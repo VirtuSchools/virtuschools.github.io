@@ -17,6 +17,56 @@
 		<!--[if lte IE 8]><link rel="stylesheet" href="assets/css/ie8.css" /><![endif]-->
 	</head>
 	<body>
+		<script>
+				// Initialize Firebase
+				var config = {
+				  apiKey: "AIzaSyBAMYXNQs9DHykysnHyNgh4Fw8WzgOppNw",
+				  authDomain: "flickering-fire-5865.firebaseapp.com",
+				  databaseURL: "https://flickering-fire-5865.firebaseio.com",
+				  storageBucket: "flickering-fire-5865.appspot.com",
+				};
+				var app = firebase.initializeApp(config);
+				var auth = app.auth();
+
+      			function initApp() {
+      				console.log("in initApp");
+        			auth.onAuthStateChanged(function(user) {
+        			  console.log("in onAuthStateChanged");
+			          if (user) {
+			            // User is signed in.
+			            console.log("User is signed in");
+			            var displayName = user.displayName;
+			            var email = user.email;
+			            var emailVerified = user.emailVerified;
+			            var photoURL = user.photoURL;
+			            var uid = user.uid;
+			            var providerData = user.providerData;
+			            user.getToken().then(function(accessToken) {
+			            	console.log("in gettoken");
+			              	document.getElementById("signupProfileBtn").href="UpdateProfile.html";
+							document.getElementById("signupProfileBtn").innerHTML="My Profile";
+							document.getElementById("loginLogoutBtn").href="#";
+							document.getElementById("loginLogoutBtn").onclick=function() { firebase.auth().signOut(); window.location.replace("Login.html"); };
+							document.getElementById("loginLogoutBtn").innerHTML="Log Out";
+					    	console.log("User " + displayName + " is logged in with " + providerData);
+			            });
+			          } else {
+			          	console.log("User is logged out.");
+			            document.getElementById("signupProfileBtn").href="Login.html";
+						document.getElementById("signupProfileBtn").innerHTML="Sign Up";
+						document.getElementById("loginLogoutBtn").href="Login.html";
+						document.getElementById("loginLogoutBtn").onclick=function(){ window.location="Login.html"};
+						document.getElementById("loginLogoutBtn").innerHTML="Login";
+					    console.log("User is logged out");
+					  }
+					});
+					
+					window.onload = function() {
+      					initApp();
+    				};
+				}
+		   </script>
+		   
 		<div id="page-wrapper">
 
 			<!-- Header -->
@@ -124,54 +174,6 @@
 			<script src="assets/js/util.js"></script>
 			<!--[if lte IE 8]><script src="assets/js/ie/respond.min.js"></script><![endif]-->
 			<script src="assets/js/main.js"></script>
-     		<script>
-				// Initialize Firebase
-				var config = {
-				  apiKey: "AIzaSyBAMYXNQs9DHykysnHyNgh4Fw8WzgOppNw",
-				  authDomain: "flickering-fire-5865.firebaseapp.com",
-				  databaseURL: "https://flickering-fire-5865.firebaseio.com",
-				  storageBucket: "flickering-fire-5865.appspot.com",
-				};
-				var app = firebase.initializeApp(config);
-				var auth = app.auth();
-
-      			function initApp() {
-      				console.log("in initApp");
-        			auth.onAuthStateChanged(function(user) {
-        			  console.log("in onAuthStateChanged");
-			          if (user) {
-			            // User is signed in.
-			            console.log("User is signed in");
-			            var displayName = user.displayName;
-			            var email = user.email;
-			            var emailVerified = user.emailVerified;
-			            var photoURL = user.photoURL;
-			            var uid = user.uid;
-			            var providerData = user.providerData;
-			            user.getToken().then(function(accessToken) {
-			            	console.log("in gettoken");
-			              	document.getElementById("signupProfileBtn").href="UpdateProfile.html";
-							document.getElementById("signupProfileBtn").innerHTML="My Profile";
-							document.getElementById("loginLogoutBtn").href="#";
-							document.getElementById("loginLogoutBtn").onclick=function() { firebase.auth().signOut(); window.location.replace("Login.html"); };
-							document.getElementById("loginLogoutBtn").innerHTML="Log Out";
-					    	console.log("User " + displayName + " is logged in with " + providerData);
-			            });
-			          } else {
-			          	console.log("User is logged out.");
-			            document.getElementById("signupProfileBtn").href="Login.html";
-						document.getElementById("signupProfileBtn").innerHTML="Sign Up";
-						document.getElementById("loginLogoutBtn").href="Login.html";
-						document.getElementById("loginLogoutBtn").onclick=function(){ window.location="Login.html"};
-						document.getElementById("loginLogoutBtn").innerHTML="Login";
-					    console.log("User is logged out");
-					  }
-					});
-					
-					window.onload = function() {
-      					initApp();
-    				};
-				}
-		   </script>
+     		
 	</body>
 </html>
