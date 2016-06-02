@@ -142,6 +142,8 @@
 															firebase.database().ref('/users/' + uid+'/courses').once('value').then(function(snapshot) {
 												 			if(snapshot.val()!=null)
 												 			{
+												 				currentCourses="";
+												 				currentcourseids="";
 																if(snapshot.val().Algebra!=null)
 																{
 																	currentCourses+="Algebra ";
@@ -215,6 +217,8 @@
 														firebase.database().ref('/users/' + uid+'/courses').once('value').then(function(snapshot) {
 												 			if(snapshot.val()!=null)
 												 			{
+												 				currentCourses="";
+												 				currentCourseIds="";
 																if(snapshot.val().Algebra!=null)
 																{
 																	currentCourses+="Algebra ";
