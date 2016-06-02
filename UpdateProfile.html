@@ -100,6 +100,7 @@
 												};
 												var app = firebase.initializeApp(config);
 												var auth = app.auth();
+												var database = firebase.database();
 
 								      			function initApp() {
 								      				console.log("in initApp");
@@ -108,6 +109,18 @@
 												// Create a callback which logs the current auth state
 												auth.onAuthStateChanged(function(user){
 													if (user) {
+														var names = user.displayName.split(" ");
+														var email = user.email;
+														var photoUrl = user.photoURL;
+														var uid = user.uid;
+														var firstname=names[0];
+														var lastname=names[1];
+														document.getElementById("currentfname").innerHTML=firstname;
+														document.getElementById("currentlname").innerHTML=lastname;
+														if(photoUrl!=null)
+														{
+															document.getElementById("image").src=photoUrl;
+														}
 														document.getElementById("signupProfileBtn").href="UpdateProfile.html";
 														document.getElementById("signupProfileBtn").innerHTML="My Profile";
 														document.getElementById("loginLogoutBtn").href="#";
@@ -126,6 +139,7 @@
 										    </script>
 										    
 										    <h2>Current Information</h2>
+										    <span class="image"><img id="image" src="https://pixabay.com/static/uploads/photo/2014/04/03/10/10/man-310013_960_720.png" alt="Photo" height="290" width="290" /></span>
 										    <strong>First Name:</strong> <span id="currentfname"></span><br>
 										    <strong>Last Name:</strong> <span id="currentlname"></span><br>
 										    <strong>User Type:</strong> <span id="currenttype"></span><br>
