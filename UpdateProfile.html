@@ -117,10 +117,10 @@
 														var lastname=names[1];
 														try
 														{
-															firebase.database().ref('/users/' + userId).once('value').then(function(snapshot) {
+															firebase.database().ref('/users/' + uid).once('value').then(function(snapshot) {
 															  if(snapshot.val().email=="")
 															  {
-																  firebase.database().ref('users/' + userId).set({
+																  firebase.database().ref('users/' + uid).set({
 																    email: email
 																  }).then(function(){
 															  		// Update successful.
@@ -177,7 +177,7 @@
 											 		var currentCourseId=null;
 											 		var currentAvatar=null;
 											 		var currentEmail=null;
-											 		firebase.database().ref('/users/' + userId).once('value').then(function(snapshot) {
+											 		firebase.database().ref('/users/' + uid).once('value').then(function(snapshot) {
 														currentUserType=snapshot.val().userType;
 														currentCourse=snapshot.val().course;
 														currentCourseId=snapshot.val().courseId;
@@ -186,25 +186,25 @@
 													});
 													if(userType!=currentUserType)
 													{
-														firebase.database().ref('users/' + userId).set({
+														firebase.database().ref('users/' + uid).set({
 														    userType: userType
 														});
 													}
 													if(course!=currentCourse)
 													{
-														firebase.database().ref('users/' + userId).set({
+														firebase.database().ref('users/' + uid).set({
 														    course: course
 														});
 													}
 													if(courseId!=currentCourseId)
 													{
-														firebase.database().ref('users/' + userId).set({
+														firebase.database().ref('users/' + uid).set({
 														    courseId: courseId
 														});
 													}
 													if(avatar!=currentAvatar)
 													{
-														firebase.database().ref('users/' + userId).set({
+														firebase.database().ref('users/' + uid).set({
 														    gender: avatar
 														});
 													}
@@ -275,7 +275,7 @@
 														  console.log(error);
 														});
 
-														firebase.database().ref('users/' + userId).set({
+														firebase.database().ref('users/' + uid).set({
 															email: enteredEmail
 														});
 											 		}
