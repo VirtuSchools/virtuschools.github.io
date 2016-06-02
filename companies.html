@@ -30,7 +30,10 @@
 
       			function initApp() {
       				console.log("in initApp");
-        			auth.onAuthStateChanged(function(user) {
+      			}
+
+        		
+        		auth.onAuthStateChanged(function(user) {
         			  console.log("in onAuthStateChanged");
 			          if (user) {
 			            // User is signed in.
@@ -61,12 +64,8 @@
 					  }
 					});
 					
-					window.onload = function() {
-      					initApp();
-    				};
-				}
 		   </script>
-		   
+
 		<div id="page-wrapper">
 
 			<!-- Header -->
