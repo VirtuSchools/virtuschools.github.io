@@ -181,7 +181,7 @@
 												 		var currentCourseId=null;
 												 		var currentAvatar=null;
 												 		var currentEmail=null;
-												 		firebase.database().ref('/users/' + uid).once('value').then(function(snapshot) {
+												 		firebase.database().ref('/users/' + uid+'/profile').once('value').then(function(snapshot) {
 												 			if(snapshot.val()!=null)
 												 			{
 																currentUserType=snapshot.val().userType;
@@ -203,7 +203,7 @@
 														if(userType!=currentUserType)
 														{
 															console.log("setting userType")
-															firebase.database().ref('users/' + uid).update({
+															firebase.database().ref('users/' + uid+'/profile').update({
 															    userType: userType
 															}).then(function() {
 															  // Update successful.
@@ -215,19 +215,19 @@
 														}
 														if(course!=currentCourse)
 														{
-															firebase.database().ref('users/' + uid).update({
+															firebase.database().ref('users/' + uid+'/profile').update({
 															    course: course
 															});
 														}
 														if(courseId!=currentCourseId)
 														{
-															firebase.database().ref('users/' + uid).update({
+															firebase.database().ref('users/' + uid+'/profile').update({
 															    courseId: courseId
 															});
 														}
 														if(avatar!=currentAvatar)
 														{
-															firebase.database().ref('users/' + uid).update({
+															firebase.database().ref('users/' + uid+'/profile').update({
 															    gender: avatar
 															});
 														}
@@ -298,7 +298,7 @@
 															  console.log(error);
 															});
 
-															firebase.database().ref('users/' + uid).update({
+															firebase.database().ref('users/' + uid+'/profile').update({
 																email: enteredEmail
 															});
 												 		}
