@@ -202,9 +202,16 @@
 														console.log("userType="+userType+" currentUserType="+currentUserType);
 														if(userType!=currentUserType)
 														{
+															console.log("setting userType")
 															firebase.database().ref('users/' + uid).set({
 															    userType: userType
-															});
+															}).then(function() {
+															  // Update successful.
+															  console.log("successful"); 
+															}, function(error) {
+															  // An error happened.
+															  console.log(error);
+															});;
 														}
 														if(course!=currentCourse)
 														{
