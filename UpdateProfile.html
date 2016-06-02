@@ -121,6 +121,7 @@
 														{
 															document.getElementById("image").src=photoUrl;
 														}
+														document.getElementById("currentemail").innerHTML=email;
 														document.getElementById("signupProfileBtn").href="UpdateProfile.html";
 														document.getElementById("signupProfileBtn").innerHTML="My Profile";
 														document.getElementById("loginLogoutBtn").href="#";
@@ -136,12 +137,79 @@
 													    console.log("User is logged out");
 												    }
 												});
+												
+											 	function update()
+											 	{
+											 		var user = firebase.auth().currentUser;
+											 		var names = user.displayName.split(" ");
+													var uid = user.uid;
+													var firstname=names[0];
+													var lastname=names[1];
+											 		var enteredPhoto=document.getElementById("purl").value;
+											 		if(enteredPhoto!="")
+											 		{
+											 			user.updateProfile({
+													  		photoURL: enteredPhoto
+														}).then(function() {
+														  // Update successful.
+														}, function(error) {
+														  // An error happened.
+														});
+											 		}
+											 		var enteredfname=document.getElementById("fname").value;
+											 		var enteredlname=document.getElementById("lname").value;
+											 		if(enteredfname!=""  && enteredlname=="")
+											 		{
+											 			var combinedName=enteredfname+" "+lastname;
+											 			user.updateProfile({
+													  		displayName: combinedName
+														}).then(function() {
+														  // Update successful.
+														}, function(error) {
+														  // An error happened.
+														});
+											 		}
+											 		else if(enteredfname!="" && enteredlname!="")
+											 		{
+											 			var combinedName=enteredfname+" "+enteredlname;
+											 			user.updateProfile({
+													  		displayName: combinedName
+														}).then(function() {
+														  // Update successful.
+														}, function(error) {
+														  // An error happened.
+														});
+											 		}
+											 		else if(enteredfname=="" && enteredlname!="")
+											 		{
+											 			var combinedName=firstname+" "+enteredlname;
+											 			user.updateProfile({
+													  		displayName: combinedName
+														}).then(function() {
+														  // Update successful.
+														}, function(error) {
+														  // An error happened.
+														});
+											 		}
+											 		var enteredEmail=document.getElementById("email").value;
+											 		if(enteredEmail!="")
+											 		{
+											 			user.updateProfile({
+													  		email : enteredEmail
+														}).then(function() {
+														  // Update successful.
+														}, function(error) {
+														  // An error happened.
+														});
+											 		}
+											 	}
 										    </script>
 										    
 										    <h2>Current Information</h2>
 										    <span class="image"><img id="image" src="https://pixabay.com/static/uploads/photo/2014/04/03/10/10/man-310013_960_720.png" alt="Photo" height="150" width="150" /></span><br>
 										    <strong>First Name:</strong> <span id="currentfname"></span><br>
 										    <strong>Last Name:</strong> <span id="currentlname"></span><br>
+										    <strong>Email:</strong> <span id="currentemail"></span><br>
 										    <strong>User Type:</strong> <span id="currenttype"></span><br>
 										    <strong>Course:</strong> <span id="currentcourse"> </span><br>
 										    <strong>Course Id:</strong> <span id="currentcourseid"></span><br>
@@ -154,8 +222,10 @@
 										    <hr style="border: dashed 3px;" />
 										        
 										    <div class = "transbox">
+										    <input type="text" id="purl" placeholder="PhotoURL"><br><br>
 										    <input type="text" id="fname" placeholder="First Name"><br><br>
 										    <input type="text" id="lname" placeholder="Last Name"><br><br>
+										    <input type="text" id="email" placeholder="Email"><br><br>
 										    <select id="type">
 										      <option value="Teacher">I am a teacher.</option>
 										      <option value="Student">I am a student.</option>
