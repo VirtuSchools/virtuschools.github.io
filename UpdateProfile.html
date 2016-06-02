@@ -111,6 +111,7 @@
 													if (user) {
 														var names = user.displayName.split(" ");
 														var email = user.email;
+														console.log(email);
 														var photoUrl = user.photoURL;
 														var uid = user.uid;
 														var firstname=names[0];
@@ -202,6 +203,7 @@
 											 		var enteredEmail=document.getElementById("email").value;
 											 		if(enteredEmail!="")
 											 		{
+											 			console.log("updating email to "+enteredEmail);
 											 			user.updateProfile({
 													  		email : enteredEmail
 														}).then(function() {
