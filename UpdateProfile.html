@@ -130,12 +130,14 @@
 															  		console.log(error);
 																  });;
 															  }
-
-															  document.getElementById("currenttype").innerHTML=snapshot.val().userType;
-															  document.getElementById("currentcourse").innerHTML=snapshot.val().course;
-															  document.getElementById("currentcourseid").innerHTML=snapshot.val().courseId;
-															  document.getElementById("currentgender").innerHTML=snapshot.val().gender;
-															  document.getElementById("currentemail").innerHTML=email;
+															  if(snapshot.val()!=null)
+															  {
+																  document.getElementById("currenttype").innerHTML=snapshot.val().userType;
+																  document.getElementById("currentcourse").innerHTML=snapshot.val().course;
+																  document.getElementById("currentcourseid").innerHTML=snapshot.val().courseId;
+																  document.getElementById("currentgender").innerHTML=snapshot.val().gender;
+																  document.getElementById("currentemail").innerHTML=email;
+															  }
 															});
 														}
 														catch(ex)
