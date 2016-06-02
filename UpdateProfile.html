@@ -111,18 +111,29 @@
 													if (user) {
 														var names = user.displayName.split(" ");
 														var email = user.email;
-														console.log(email);
 														var photoUrl = user.photoURL;
 														var uid = user.uid;
 														var firstname=names[0];
 														var lastname=names[1];
+														firebase.database().ref('/users/' + userId).once('value').then(function(snapshot) {
+														  if(snapshot.val().email=="")
+														  {
+															  firebase.database().ref('users/' + userId).set({
+															    email: email
+															  });
+														  }
+														  document.getElementById("currenttype").innerHTML=snapshot.val().userType;
+														  document.getElementById("currentcourse").innerHTML=snapshot.val().course;
+														  document.getElementById("currentcourseid").innerHTML=snapshot.val().courseId;
+														  document.getElementById("currentgender").innerHTML=snapshot.val().gender;
+														  document.getElementById("currentemail").innerHTML=email;
+														});
 														document.getElementById("currentfname").innerHTML=firstname;
 														document.getElementById("currentlname").innerHTML=lastname;
 														if(photoUrl!=null)
 														{
 															document.getElementById("image").src=photoUrl;
 														}
-														document.getElementById("currentemail").innerHTML=email;
 														document.getElementById("signupProfileBtn").href="UpdateProfile.html";
 														document.getElementById("signupProfileBtn").innerHTML="My Profile";
 														document.getElementById("loginLogoutBtn").href="#";
@@ -147,6 +158,46 @@
 													var firstname=names[0];
 													var lastname=names[1];
 											 		var enteredPhoto=document.getElementById("purl").value;
+											 		var userType=document.getElementById("type").value;
+											 		var course=document.getElementById("course").value;
+											 		var courseId=document.getElementById("courseId").value;
+											 		var avatar=document.getElementById("gender").value;
+											 		var currentUserType=null;
+											 		var currentCourse=null;
+											 		var currentCourseId=null;
+											 		var currentAvatar=null;
+											 		var currentEmail=null;
+											 		firebase.database().ref('/users/' + userId).once('value').then(function(snapshot) {
+														currentUserType=snapshot.val().userType;
+														currentCourse=snapshot.val().course;
+														currentCourseId=snapshot.val().courseId;
+														currentAvatar=snapshot.val().gender;
+														currentEmail=snapshot.val().email;
+													});
+													if(userType!=currentUserType)
+													{
+														firebase.database().ref('users/' + userId).set({
+														    userType: userType
+														});
+													}
+													if(course!=currentCourse)
+													{
+														firebase.database().ref('users/' + userId).set({
+														    course: course
+														});
+													}
+													if(courseId!=currentCourseId)
+													{
+														firebase.database().ref('users/' + userId).set({
+														    courseId: courseId
+														});
+													}
+													if(avatar!=currentAvatar)
+													{
+														firebase.database().ref('users/' + userId).set({
+														    gender: avatar
+														});
+													}
 											 		if(enteredPhoto!="")
 											 		{
 											 			user.updateProfile({
@@ -212,6 +263,10 @@
 														}, function(error) {
 														  // An error happened.
 														  console.log(error);
+														});
+
+														firebase.database().ref('users/' + userId).set({
+															email: enteredEmail
 														});
 											 		}
 
