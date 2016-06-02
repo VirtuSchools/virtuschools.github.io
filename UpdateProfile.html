@@ -130,18 +130,18 @@
 															  		console.log(error);
 																  });;
 															  }
+
+															  document.getElementById("currenttype").innerHTML=snapshot.val().userType;
+															  document.getElementById("currentcourse").innerHTML=snapshot.val().course;
+															  document.getElementById("currentcourseid").innerHTML=snapshot.val().courseId;
+															  document.getElementById("currentgender").innerHTML=snapshot.val().gender;
+															  document.getElementById("currentemail").innerHTML=email;
 															});
 														}
 														catch(ex)
 														{
 															console.log(ex);
 														}
-														  document.getElementById("currenttype").innerHTML=snapshot.val().userType;
-														  document.getElementById("currentcourse").innerHTML=snapshot.val().course;
-														  document.getElementById("currentcourseid").innerHTML=snapshot.val().courseId;
-														  document.getElementById("currentgender").innerHTML=snapshot.val().gender;
-														  document.getElementById("currentemail").innerHTML=email;
-														});
 														document.getElementById("currentfname").innerHTML=firstname;
 														document.getElementById("currentlname").innerHTML=lastname;
 														if(photoUrl!=null)
