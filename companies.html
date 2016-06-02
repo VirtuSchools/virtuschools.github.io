@@ -44,7 +44,6 @@
 			            var uid = user.uid;
 			            var providerData = user.providerData;
 			            user.getToken().then(function(accessToken) {
-			            	console.log("in gettoken");
 			              	document.getElementById("signupProfileBtn").href="UpdateProfile.html";
 							document.getElementById("signupProfileBtn").innerHTML="My Profile";
 							document.getElementById("loginLogoutBtn").href="#";

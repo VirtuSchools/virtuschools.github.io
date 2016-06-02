@@ -82,18 +82,31 @@
 								<!-- Content -->
 									<section id="content">
 										    <script>
-												var ref = new Firebase("https://flickering-fire-5865.firebaseio.com/");
+												// Initialize Firebase
+												var config = {
+												  apiKey: "AIzaSyBAMYXNQs9DHykysnHyNgh4Fw8WzgOppNw",
+												  authDomain: "flickering-fire-5865.firebaseapp.com",
+												  databaseURL: "https://flickering-fire-5865.firebaseio.com",
+												  storageBucket: "flickering-fire-5865.appspot.com",
+												};
+												var app = firebase.initializeApp(config);
+												var auth = app.auth();
+
+								      			function initApp() {
+								      				console.log("in initApp");
+								      			}
+
 												// Create a callback which logs the current auth state
-												function authDataCallback(authData) {
-													if (authData) {
+												auth.onAuthStateChanged(function(user){
+													if (user) {
 														document.getElementById("signupProfileBtn").href="UpdateProfile.html";
 														document.getElementById("signupProfileBtn").innerHTML="My Profile";
 														document.getElementById("loginLogoutBtn").href="#";
-														document.getElementById("loginLogoutBtn").onclick=function() { ref.unauth(); };
+														document.getElementById("loginLogoutBtn").onclick=function() { ref.unauth(); window.location.replace("Login.html");};
 														document.getElementById("loginLogoutBtn").innerHTML="Log Out";
 													    console.log("User " + authData.uid + " is logged in with " + authData.provider);
 													} else {
-														document.getElementById("signupProfileBtn").href="Register.html";
+														document.getElementById("signupProfileBtn").href="Login.html";
 														document.getElementById("signupProfileBtn").innerHTML="Sign Up";
 														document.getElementById("loginLogoutBtn").href="Login.html";
 														document.getElementById("loginLogoutBtn").onclick=function(){ window.location="Login.html"};
@@ -101,10 +114,6 @@
 													    console.log("User is logged out");
 												    }
 												}
-
-												// Register the callback to be fired every time auth state changes
-												ref.onAuth(authDataCallback)
-												ref.on('child_added', ref.getAuth());
 										   </script>
 										    
 										    <div class="template-wrap clear">

@@ -91,139 +91,38 @@
 									<section id="content">
 										<a href="#" class="image fit"><img src="images/pic05.jpg" alt="" /></a>
 										     <script>
-											    var ref = new Firebase("https://flickering-fire-5865.firebaseio.com/");
-											    var user=null;
-											    // Register the callback to be fired every time auth state changes
-											    ref.onAuth(authDataCallback)
+											    // Initialize Firebase
+												var config = {
+												  apiKey: "AIzaSyBAMYXNQs9DHykysnHyNgh4Fw8WzgOppNw",
+												  authDomain: "flickering-fire-5865.firebaseapp.com",
+												  databaseURL: "https://flickering-fire-5865.firebaseio.com",
+												  storageBucket: "flickering-fire-5865.appspot.com",
+												};
+												var app = firebase.initializeApp(config);
+												var auth = app.auth();
 
-											    function update()
-											    {
-											        try
-											      	{
-												        var firstname = document.getElementById("fname").value;
-												        var lastname = document.getElementById("lname").value;
-												        var userType=document.getElementById("type").value;
-												        var maleFemale=document.getElementById("type2").value;
-												        var courseId=document.getElementById("courseId").value;
-												        var course=document.getElementById("course").value;
-												        var usersRef = ref.child("users");
-												        var coursesRef = ref.child("courseIds");
-												       	
-												        if(userType=="Teacher")
-												        {
-													        coursesRef.child(courseId).once('value', function(snapshot)
-													        {
-													        	if(snapshot.val()==null || document.getElementById("courseId").value==document.getElementById("currentcourseid").innerHTML)
-													        	{
-													        		coursesRef.child(courseId).child("teacher").set({
-															        u_id: user,
-															        createdByUserId: user
-															        });
-															        coursesRef.child(courseId).child("misc").set({
-															        course_type: course,
-															        createdByUserId: user
-															        });
+								      			function initApp() {
+								      				console.log("in initApp");
+								      			}
 
-													        		usersRef.child(user).set({
-															        first_name: firstname,
-															        last_name: lastname,
-															        user_type: userType,
-															        course_type:course,
-															        course_id:courseId,
-															        male_female:maleFemale,
-															        createdByUserId: user
-															        });
-													        	    alert("Successfully updated profile.")
-													        	}
-													        	else
-													        	{
-													        		alert("CourseId Already Taken. Please Try another.")
-													        	}
-													        })
-												        }
-												        else if(userType=="Student")
-												        {
-												        	coursesRef.child(courseId).once('value', function(snapshot)
-													        {
-													        	if(snapshot.val()==null)
-													        	{
-														        	alert("CourseId Not Found. Ask your teacher for an updated Id.")
-														        }
-														        else
-														        {
-														        	coursesRef.child(courseId).child("students").push({
-															          u_id: user,
-															          first_name:firstname,
-															          last_name:lastname,
-															          createdByUserId: user
-															        });
-
-														        	usersRef.child(user).set({
-																	first_name: firstname,
-																	last_name: lastname,
-																	user_type: userType,
-																	course_type:course,
-																	course_id:courseId,
-																	male_female:maleFemale,
-																	createdByUserId: user
-																	});
-																	alert("Successfully updated profile.");
-														        }
-														    });
-												        }
-											        }
-											        catch(exception)
-											        {
-											          alert(exception);
-											    	}
-											    }
 												// Create a callback which logs the current auth state
-										     	function authDataCallback(authData) {
-										          if (authData) {
-										          	user=authData.uid;
-										            console.log("User " + authData.uid + " is logged in with " + authData.provider);
-										            document.getElementById("signupProfileBtn").href="UpdateProfile.html";
-													document.getElementById("signupProfileBtn").innerHTML="My Profile";
-													document.getElementById("loginLogoutBtn").href="#";
-													document.getElementById("loginLogoutBtn").onclick=function() { ref.unauth(); window.location.replace("Login.html"); };
-													document.getElementById("loginLogoutBtn").innerHTML="Log Out";
-													userRef = ref.child("users").child(user);
-            										userRef.once("value", function (snap) {
-            											var userValue = snap.val();
-											            if (!user || userValue==null) {
-											                return;
-											            }
-											            document.getElementById("currentfname").innerHTML=userValue.first_name;
-											            document.getElementById("currentlname").innerHTML=userValue.last_name;
-											            document.getElementById("currenttype").innerHTML=userValue.user_type;
-											            document.getElementById("currentcourse").innerHTML=userValue.course_type;
-											            document.getElementById("currentcourseid").innerHTML=userValue.course_id;
-											            document.getElementById("currentgender").innerHTML=userValue.male_female;
-											            document.getElementById("fname").value=userValue.first_name;
-												        document.getElementById("lname").value=userValue.last_name;
-												        document.getElementById("type").value=userValue.user_type;
-												        document.getElementById("type2").value=userValue.course_type;
-												        document.getElementById("courseId").value=userValue.course_id;
-												        document.getElementById("course").value=userValue.male_female;
-											        });
-										          } else {
-										          	document.getElementById("signupProfileBtn").href="Register.html";
-													document.getElementById("signupProfileBtn").innerHTML="Sign Up";
-													document.getElementById("loginLogoutBtn").href="Login.html";
-													document.getElementById("loginLogoutBtn").onclick=function(){ window.location="Login.html"};
-													document.getElementById("loginLogoutBtn").innerHTML="Login";
-													document.getElementById("currentfname").innerHTML="";
-											        document.getElementById("currentlname").innerHTML="";
-											        document.getElementById("currenttype").innerHTML="";
-											        document.getElementById("currentcourse").innerHTML="";
-											        document.getElementById("currentcourseid").innerHTML="";
-											        document.getElementById("currentgender").innerHTML="";
-										            console.log("User is logged out");
-										          }
-										        }
-										        // Register the callback to be fired every time auth state changes
-										        ref.onAuth(authDataCallback)
-										        //ref.on('child_added', ref.getAuth());
+												auth.onAuthStateChanged(function(user){
+													if (user) {
+														document.getElementById("signupProfileBtn").href="UpdateProfile.html";
+														document.getElementById("signupProfileBtn").innerHTML="My Profile";
+														document.getElementById("loginLogoutBtn").href="#";
+														document.getElementById("loginLogoutBtn").onclick=function() { ref.unauth(); window.location.replace("Login.html");};
+														document.getElementById("loginLogoutBtn").innerHTML="Log Out";
+													    console.log("User " + authData.uid + " is logged in with " + authData.provider);
+													} else {
+														document.getElementById("signupProfileBtn").href="Login.html";
+														document.getElementById("signupProfileBtn").innerHTML="Sign Up";
+														document.getElementById("loginLogoutBtn").href="Login.html";
+														document.getElementById("loginLogoutBtn").onclick=function(){ window.location="Login.html"};
+														document.getElementById("loginLogoutBtn").innerHTML="Login";
+													    console.log("User is logged out");
+												    }
+												}
 										    </script>
 										    
 										    <h2>Current Information</h2>
