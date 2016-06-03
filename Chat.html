@@ -106,21 +106,22 @@
               currentCourse="";
               currentCourseId="";
             }
+            console.log("currentCourse="+currentCourse);
+            console.log("currentCourseId="+currentCourseId);
+            if(currentCourse!=null && currentCourse!="" && currentCourseId!=null && currentCourseId!="")
+            {
+              return firebase.database().ref('/'+currentCourse+'/'+ currentCourseId+'/chat');
+            }
+            else
+            {
+              return null;
+            }
           });
-          console.log("currentCourse="+currentCourse);
-          console.log("currentCourseId="+currentCourseId);
-          if(currentCourse!=null && currentCourse!="" && currentCourseId!=null && currentCourseId!="")
-          {
-            return firebase.database().ref('/'+currentCourse+'/'+ currentCourseId+'/chat');
-          }
-          else
-          {
-            return null;
-          }
         }
         catch(ex)
         {
           console.log(ex);
+          return null;
         }
       }
 
