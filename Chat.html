@@ -80,7 +80,7 @@
       var firstName="";
       var lastName="";
 
-      function getMessagesRef()
+      function getMessagesRef(_callback)
       {
         try
         {
@@ -110,18 +110,18 @@
             console.log("currentCourseId="+currentCourseId);
             if(currentCourse!=null && currentCourse!="" && currentCourseId!=null && currentCourseId!="")
             {
-              return firebase.database().ref('/'+currentCourse+'/'+ currentCourseId+'/chat');
+              _callback(firebase.database().ref('/'+currentCourse+'/'+ currentCourseId+'/chat'));
             }
             else
             {
-              return null;
+              _callback(null);
             }
           });
         }
         catch(ex)
         {
           console.log(ex);
-          return null;
+          _callback(null);
         }
       }
 
@@ -139,16 +139,18 @@
           var currentCourse="";
           var currentCourseId="";
           //SAVE DATA TO FIREBASE AND EMPTY FIELD
-          var messagesRef=getMessagesRef();
-          if(messagesRef!=null)
-          {
-            messagesRef.push({name:username, text:message});
-            $(document.getElementById("mathTextBox")).mathquill('latex')="";
-          }
-          else
-          {
-            console.log("messagesRef is null");
-          } 
+          getMessagesRef(function(messagesRef){
+            if(messagesRef!=null)
+            {
+              console.log("messagesRef not null pushing...");
+              messagesRef.push({name:username, text:message});
+              $(document.getElementById("mathTextBox")).mathquill('latex')="";
+            }
+            else
+            {
+              console.log("messagesRef is null");
+            }
+          });
         }
       });
 
@@ -166,17 +168,20 @@
           var message = $(document.getElementById("mathTextBox")).mathquill('latex');
           var currentCourse="";
           var currentCourseId="";
-          var messagesRef=getMessagesRef();
+          getMessagesRef(function(messagesRef){
+            if(messagesRef!=null)
+            {
+              console.log("messagesRef not null pushing...");
+              messagesRef.push({name:username, text:message});
+              $(document.getElementById("mathTextBox")).mathquill('latex')="";
+            }
+            else
+            {
+              console.log("messagesRef is null");
+            }
+          });
           //SAVE DATA TO FIREBASE AND EMPTY FIELD
-          if(messagesRef!=null)
-          {
-            messagesRef.push({name:username, text:message});
-            $(document.getElementById("mathTextBox")).mathquill('latex')="";
-          }
-          else
-          {
-            console.log("messagesRef is null");
-          }
+          
         }
         catch(ex)
         {
@@ -189,7 +194,8 @@
       auth.onAuthStateChanged(function(user){
           if (user) {
             // Add a callback that is triggered for each chat message.
-            getMessagesRef().limitToLast(10).on('child_added', function (snapshot) {
+            getMessagesRef(function(messagesRef){
+              messagesRef.limitToLast(10).on('child_added', function (snapshot) {
               //GET DATA
               var data = snapshot.val();
               var username = data.name;
@@ -217,6 +223,7 @@
                   MQ.StaticMath(list[i]); //second console output
               }
             });
+          });
           }
           else
           {
