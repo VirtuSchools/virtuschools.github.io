@@ -133,6 +133,10 @@
           {
             messagesRef.push({name:username, text:message});
             $(document.getElementById("mathTextBox")).mathquill('latex')="";
+          }
+          else
+          {
+            console.log("messagesRef is null");
           } 
         }
       });
@@ -155,6 +159,10 @@
           {
             messagesRef.push({name:username, text:message});
             $(document.getElementById("mathTextBox")).mathquill('latex')="";
+          }
+          else
+          {
+            console.log("messagesRef is null");
           }
       }
 
