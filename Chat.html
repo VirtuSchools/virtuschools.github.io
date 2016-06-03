@@ -83,6 +83,10 @@
       function getMessagesRef()
       {
           var user = firebase.auth().currentUser;
+          if(!user)
+          {
+            window.location.replace("Login.html");
+          }
           var uid=user.uid;
           var currentCourse="";
           var currentCourseId="";
