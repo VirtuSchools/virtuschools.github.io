@@ -143,6 +143,8 @@
 
       function Send()
       {
+        try
+        {
           //FIELD VALUES
           var user = firebase.auth().currentUser;
           var uid=user.uid;
@@ -164,6 +166,11 @@
           {
             console.log("messagesRef is null");
           }
+        }
+        catch(ex)
+        {
+          console.log(ex);
+        }
       }
 
       
