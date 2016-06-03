@@ -199,7 +199,7 @@
               //GET DATA
               var data = snapshot.val();
               var username = data.name;
-              var message = data.text;
+              var message = data.text.split(':').join(' ');
 
               var paraUser = document.createElement("b");
               paraUser.innerHTML=username;
@@ -211,7 +211,7 @@
 
               var element = document.getElementById("chatMessages");
               element.appendChild(paraUser);
-              element.appendChild(paraMessage.split(':').join(' '));
+              element.appendChild(paraMessage);
 
               var line=document.createElement("HR");
               element.appendChild(line);
