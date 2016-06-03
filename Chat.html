@@ -73,7 +73,7 @@
       var app = firebase.initializeApp(config);
       var auth = app.auth();
       var database = firebase.database();
-      var messagesRef=getMessagesRef();
+      //var messagesRef=getMessagesRef();
       var MQ = MathQuill.getInterface(2);
       //var messageList = $('#example-messages');
       var messageList=document.getElementById("chatMessages");
@@ -128,6 +128,7 @@
           var currentCourse="";
           var currentCourseId="";
           //SAVE DATA TO FIREBASE AND EMPTY FIELD
+          var messagesRef=getMessagesRef();
           if(messagesRef!=null)
           {
             messagesRef.push({name:username, text:message});
@@ -148,6 +149,7 @@
           var message = $(document.getElementById("mathTextBox")).mathquill('latex');
           var currentCourse="";
           var currentCourseId="";
+          var messagesRef=getMessagesRef();
           //SAVE DATA TO FIREBASE AND EMPTY FIELD
           if(messagesRef!=null)
           {
@@ -157,7 +159,7 @@
       }
 
       // Add a callback that is triggered for each chat message.
-      messagesRef.limitToLast(10).on('child_added', function (snapshot) {
+      getMessagesRef().limitToLast(10).on('child_added', function (snapshot) {
         //GET DATA
         var data = snapshot.val();
         var username = data.name;
