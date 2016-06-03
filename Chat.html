@@ -82,6 +82,8 @@
 
       function getMessagesRef()
       {
+        try
+        {
           var user = firebase.auth().currentUser;
           if(!user)
           {
@@ -94,11 +96,13 @@
           firebase.database().ref('/users/' + uid+'/profile').once('value').then(function(snapshot) {
             if(snapshot.val()!=null)
             {
+              console.log("snapshot not null --"+snapshot.val().currentCourse+"--"+snapshot.val().currentCourseId);
               currentCourse=snapshot.val().currentCourse;
               currentCourseId=snapshot.val().currentCourseId;
             }
             else
             {
+              console.log("snapshot null");
               currentCourse="";
               currentCourseId="";
             }
@@ -113,6 +117,11 @@
           {
             return null;
           }
+        }
+        catch(ex)
+        {
+          console.log(ex);
+        }
       }
 
       document.addEventListener('keypress', function(e) {
