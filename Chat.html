@@ -79,6 +79,7 @@
       var messageList=document.getElementById("chatMessages");
       var firstName="";
       var lastName="";
+      var counter=0;
 
       function getMessagesRef(_callback)
       {
@@ -193,42 +194,46 @@
 
       auth.onAuthStateChanged(function(user){
           if (user) {
-            // Add a callback that is triggered for each chat message.
-            getMessagesRef(function(messagesRef){
-              messagesRef.limitToLast(10).on('child_added', function (snapshot) {
-              //GET DATA
-              var data = snapshot.val();
-              var username = data.name;
-              var message = data.text.split(':').join(' ');
+            if(counter<1)
+            {
+              // Add a callback that is triggered for each chat message.
+              getMessagesRef(function(messagesRef){
+                messagesRef.limitToLast(10).on('child_added', function (snapshot) {
+                //GET DATA
+                var data = snapshot.val();
+                var username = data.name;
+                var message = data.text.split(':').join(' ');
 
-              var paraUser = document.createElement("b");
-              paraUser.innerHTML=username;
+                var paraUser = document.createElement("b");
+                paraUser.innerHTML=username;
 
-              var paraMessage = document.createElement("span");
-              var nodeMessage = document.createTextNode(message);
-              paraMessage.appendChild(nodeMessage);
-              paraMessage.className="message";
+                var paraMessage = document.createElement("span");
+                var nodeMessage = document.createTextNode(message);
+                paraMessage.appendChild(nodeMessage);
+                paraMessage.className="message";
 
-              var element = document.getElementById("chatMessages");
-              element.appendChild(paraUser);
-              element.appendChild(paraMessage);
+                var element = document.getElementById("chatMessages");
+                element.appendChild(paraUser);
+                element.appendChild(paraMessage);
 
-              var line=document.createElement("HR");
-              element.appendChild(line);
+                var line=document.createElement("HR");
+                element.appendChild(line);
 
-              //SCROLL TO BOTTOM OF MESSAGE LIST
-              //messageList[0].scrollTop = messageList[0].scrollHeight;
-              var list=document.getElementsByClassName("message");
-              for (var i = 0; i < list.length; i++) {
-                  MQ.StaticMath(list[i]); //second console output
-              }
+                //SCROLL TO BOTTOM OF MESSAGE LIST
+                //messageList[0].scrollTop = messageList[0].scrollHeight;
+                var list=document.getElementsByClassName("message");
+                for (var i = 0; i < list.length; i++) {
+                    MQ.StaticMath(list[i]); //second console output
+                }
+              });
             });
-          });
+            counter++;
           }
-          else
-          {
-            window.location.replace("Login.html");
-          }
+        }
+        else
+        {
+          window.location.replace("Login.html");
+        }
       });
 
     </script>
