@@ -126,6 +126,29 @@
 										          //setTimeout(continueExecution, 3000)
 										          
 
+										       function getCourseInfo()
+										       {
+										       	  var m="";
+										       	  firebase.database().ref('/users/' + firebase.auth().currentUser.uid+'/courses').on('value', function(snapshot){
+										       	  	   var jojo=snapshot.val();
+													   for(var x in jojo)
+													   {
+  															m+=x+','; m+=jojo[x]+',';
+													   } 
+												   });
+										       	   while(m=="")
+										       	   {
+										       	   	  sleep(1);
+										       	   }
+										       	   return m;
+										       }
+
+										       function sleep(seconds) 
+											   {
+												  var e = new Date().getTime() + (seconds * 1000);
+												  while (new Date().getTime() <= e) {}
+												}
+
 										       function alertUser(msg)
 											   {
 											  	 jAlert(msg,'Login', true);
