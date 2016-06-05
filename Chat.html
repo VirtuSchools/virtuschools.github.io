@@ -236,8 +236,8 @@
             }
           });
           //SAVE DATA TO FIREBASE AND EMPTY FIELD
-          var objDiv = document.getElementById("scroller");
-          objDiv.scrollTop = objDiv.scrollHeight;         
+          /*var objDiv = document.getElementById("scroller");
+          objDiv.scrollTop = objDiv.scrollHeight; */         
         }
         catch(ex)
         {
@@ -275,7 +275,7 @@
                 element.appendChild(line);
 
                 //SCROLL TO BOTTOM OF MESSAGE LIST
-                var objDiv = document.getElementById("your_div");
+                var objDiv = document.getElementById("scroller");
                 objDiv.scrollTop = objDiv.scrollHeight;
                 //messageList[0].scrollTop = messageList[0].scrollHeight;
                 var list=document.getElementsByClassName("message");
