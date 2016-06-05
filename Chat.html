@@ -44,7 +44,7 @@
   </head>
   <body style="background-color:lightgrey;">
     <!-- CHAT MARKUP -->
-    <div style="color:black" class="scroll-pane">
+    <div id="scroller" style="color:black" class="scroll-pane">
       <header>Chat, Ask Questions, and Write Solutions Here</header>
       <hr />
       <hr />
@@ -54,7 +54,7 @@
     </div>
 
 
-    <p><span id="mathTextBox" style="color:cyan" class="mathquill-editor"></span></p>
+    <p><span id="mathTextBox" style="color:black" class="mathquill-editor"></span></p>
 
     
     <script type="text/javascript" src="Latex/mathquill.js"></script>
@@ -134,13 +134,13 @@
                               console.log("getting course info");
                               var m="";
                               firebase.database().ref('/users/' + firebase.auth().currentUser.uid+'/courses').on('value', function(snapshot){
-                                console.log("oneMissi");
+                              //  console.log("oneMissi");
                                    var jojo=snapshot.val();
                              for(var x in jojo)
                              {
                                 m+=x+','; m+=jojo[x]+';';
                              }
-                             console.log("twoMissi");
+                            // console.log("twoMissi");
                              callback(m); 
                            });
                         }
@@ -236,7 +236,7 @@
             }
           });
           //SAVE DATA TO FIREBASE AND EMPTY FIELD
-          
+          $("#scroller").scrollTop($("#scroller")[0].scrollHeight);          
         }
         catch(ex)
         {
