@@ -126,6 +126,55 @@
         }
       }
 
+      function getCourseInfo(callback)
+                           {
+                            try
+                            {
+                              console.log("getting course info");
+                              var m="";
+                              firebase.database().ref('/users/' + firebase.auth().currentUser.uid+'/courses').on('value', function(snapshot){
+                                console.log("oneMissi");
+                                   var jojo=snapshot.val();
+                             for(var x in jojo)
+                             {
+                                m+=x+','; m+=jojo[x]+';';
+                             }
+                             console.log("twoMissi");
+                             callback(m); 
+                           });
+                        }
+                        catch(ex)
+                        {
+                          console.log(ex);
+                        }   
+                           }
+
+                           function one(result) {
+                            try
+                            {
+                            var test = result;
+                            console.log(test);
+                            // call window.uwkQuery to query the UWKWebView C# component
+                            // in Unity from the web page
+                            const data = {
+                                  messageType: "UnityMessage",
+                                  message: test
+                              };
+
+                              console.log("Sending uwkQuery");
+                              window.uwkQuery({
+                                  // encode the request as a JSON string
+                                  request: JSON.stringify(data),
+                                  onSuccess: function(response) {
+                                    console.log(response); 
+                                  }
+                              });
+                          }
+                          catch(ex)
+                          {
+                            console.log(ex);
+                          }
+                        }
       /*
       document.addEventListener('keypress', function(e) {
         var key = e.which || e.keyCode;
