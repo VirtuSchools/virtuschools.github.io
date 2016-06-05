@@ -51,15 +51,13 @@
       <div id="chatMessages">
       </div>
       
-    </div>
-
-
     <p><span id="mathTextBox" style="color:black" class="mathquill-editor"></span></p>
 
     
     <script type="text/javascript" src="Latex/mathquill.js"></script>
 
      <button onclick="Send()">Send</button> 
+   </div>
     <!-- CHAT JAVACRIPT -->
     <script>
       // CREATE A REFERENCE TO FIREBASE
@@ -253,7 +251,7 @@
             {
               // Add a callback that is triggered for each chat message.
               getMessagesRef(function(messagesRef){
-                messagesRef.limitToLast(10).on('child_added', function (snapshot) {
+                messagesRef.limitToLast(6).on('child_added', function (snapshot) {
                 //GET DATA
                 var data = snapshot.val();
                 var username = data.name;
