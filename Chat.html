@@ -137,21 +137,24 @@
           lastName=names[1];
           var username = firstName+" "+lastName+": ";
           var message = $(document.getElementById("mathTextBox")).mathquill('latex');
-          var currentCourse="";
-          var currentCourseId="";
-          //SAVE DATA TO FIREBASE AND EMPTY FIELD
-          getMessagesRef(function(messagesRef){
-            if(messagesRef!=null)
-            {
-              console.log("messagesRef not null pushing...");
-              messagesRef.push({name:username, text:message});
-              $(document.getElementById("mathTextBox")).mathquill('latex')="";
-            }
-            else
-            {
-              console.log("messagesRef is null");
-            }
-          });
+          if(message!="")
+          {
+            var currentCourse="";
+            var currentCourseId="";
+            //SAVE DATA TO FIREBASE AND EMPTY FIELD
+            getMessagesRef(function(messagesRef){
+              if(messagesRef!=null)
+              {
+                console.log("messagesRef not null pushing...");
+                messagesRef.push({name:username, text:message});
+                $(document.getElementById("mathTextBox")).mathquill('latex')="";
+              }
+              else
+              {
+                console.log("messagesRef is null");
+              }
+            });
+          }
         }
       });
 
