@@ -126,18 +126,27 @@
 										          //setTimeout(continueExecution, 3000)
 										          
 
-										       function getCourseInfo()
+										       function getCourseInfo(callback)
 										       {
 										       	  var m="";
-										       	  firebase.database().ref('/users/' + firebase.auth().currentUser.uid+'/courses').on('value', function(snapshot){
+										       	  firebase.database().ref('/users/' + firebase.auth().currentUser.uid+'/courses').on('value', function(snapshot, doM(daM)){
 										       	  	   var jojo=snapshot.val();
 													   for(var x in jojo)
 													   {
   															m+=x+','; m+=jojo[x]+',';
 													   }
-													   return m; 
+													   callback(m); 
 												   });   
 										       }
+
+										       function one(result) {
+												  var test = result;
+												  console.log(test);
+												  // Do anything you like
+												}
+
+
+												//getCourseInfo(function(result) { one(result); });
 
 										       function sleep(seconds) 
 											   {
