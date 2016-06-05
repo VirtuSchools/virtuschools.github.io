@@ -280,8 +280,7 @@
                 }
 
                 //SCROLL TO BOTTOM OF MESSAGE LIST
-                var objDiv = document.getElementById("scroller");
-                objDiv.scrollTop = objDiv.scrollHeight;
+                window.scrollTo(0,document.body.scrollHeight);
               });
             });
             counter++;
