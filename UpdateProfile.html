@@ -350,6 +350,41 @@
 											 			console.log(ex);
 											 		}
 											 	}
+
+											   function getCourseInfo(callback)
+										       {
+										       	  var m="";
+										       	  firebase.database().ref('/users/' + firebase.auth().currentUser.uid+'/courses').on('value', function(snapshot){
+										       	  	   var jojo=snapshot.val();
+													   for(var x in jojo)
+													   {
+  															m+=x+','; m+=jojo[x]+';';
+													   }
+													   callback(m); 
+												   });   
+										       }
+
+										       function one(result) {
+												  var test = result;
+												  console.log(test);
+												  // call window.uwkQuery to query the UWKWebView C# component
+												  // in Unity from the web page
+												  const data = {
+											          messageType: "UnityMessage",
+											          message: test
+											      };
+
+											      window.uwkQuery({
+											          // encode the request as a JSON string
+											          request: JSON.stringify(data),
+											          onSuccess: function(response) {
+											            console.log(response); 
+											          }
+											      });
+												}
+
+
+
 										    </script>
 										    
 										    <h2>Current Information</h2>
