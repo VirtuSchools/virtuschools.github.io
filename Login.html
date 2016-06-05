@@ -14,7 +14,8 @@
 		<script src="assets/js/jquery.ui.draggable.js" type="text/javascript"></script>
 
 		<!-- Core files -->
-		<script src="https://www.gstatic.com/firebasejs/3.0.2/firebase.js"></script>
+		<script src="https://www.gstatic.com/firebasejs/live/3.0/firebase.js"></script>
+		<!--<script src="https://www.gstatic.com/firebasejs/3.0.2/firebase.js"></script>-->
 		<script src="assets/js/jquery.alerts.js" type="text/javascript"></script>
 		<link href="assets/css/jquery.alerts.css" rel="stylesheet" type="text/css" media="screen" />
 		<script src="https://www.gstatic.com/firebasejs/live/3.0/firebase-app.js"></script>
@@ -90,13 +91,14 @@
 								<!-- Content -->
 									<section id="content">
 										    <script>
-										       // Firebase config.
-											    var config = {
-											    apiKey: "AIzaSyBAMYXNQs9DHykysnHyNgh4Fw8WzgOppNw",
-											    authDomain: "flickering-fire-5865.firebaseapp.com",
-											    databaseURL: "https://flickering-fire-5865.firebaseio.com",
-											    storageBucket: "flickering-fire-5865.appspot.com",
-											  };
+										        // Initialize Firebase
+												var config = {
+												  apiKey: "AIzaSyBAMYXNQs9DHykysnHyNgh4Fw8WzgOppNw",
+												  authDomain: "flickering-fire-5865.firebaseapp.com",
+												  databaseURL: "https://flickering-fire-5865.firebaseio.com",
+												  storageBucket: "flickering-fire-5865.appspot.com",
+												};
+												
 
 
 											      // FirebaseUI config.
@@ -115,7 +117,8 @@
 
 											      // Initialize the FirebaseUI Widget using Firebase.
 											      var app = firebase.initializeApp(config);
-											      var auth = app.auth();
+												  var auth = app.auth();
+												  var database = firebase.database();
 											      var ui = new firebaseui.auth.AuthUI(auth);
 											      // The start method will wait until the DOM is loaded.
 											      ui.start('#firebaseui-auth-container', uiConfig);
