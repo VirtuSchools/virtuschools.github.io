@@ -274,14 +274,16 @@
                 var line=document.createElement("HR");
                 element.appendChild(line);
 
-                //SCROLL TO BOTTOM OF MESSAGE LIST
-                var objDiv = document.getElementById("scroller");
-                objDiv.scrollTop = objDiv.scrollHeight;
+                
                 //messageList[0].scrollTop = messageList[0].scrollHeight;
                 var list=document.getElementsByClassName("message");
                 for (var i = 0; i < list.length; i++) {
                     MQ.StaticMath(list[i]); //second console output
                 }
+
+                //SCROLL TO BOTTOM OF MESSAGE LIST
+                var objDiv = document.getElementById("scroller");
+                objDiv.scrollTop = objDiv.scrollHeight;
               });
             });
             counter++;
